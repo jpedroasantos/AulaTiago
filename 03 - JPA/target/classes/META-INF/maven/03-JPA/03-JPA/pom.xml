@@ -22,14 +22,14 @@
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-core</artifactId>
-			<version>RELEASE</version>
+			<version>5.4.12.Final</version>
 		</dependency>
 		<dependency>
 			<groupId>oracle</groupId>
 			<artifactId>jdbc-driver</artifactId>
 			<version>12</version>
 			<scope>system</scope>
-			<systemPath>P:\_Thiago/ojdbc8.jar</systemPath>
+			<systemPath>C:\Users\logonrmlocal\Desktop\AulaTiago\ojdbc8.jar</systemPath>
 		</dependency>
 	</dependencies>
 </project>
