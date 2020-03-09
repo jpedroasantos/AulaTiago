@@ -27,8 +27,10 @@ public class Veiculo {
 	@Column(name="NR_ANO")
 	private int nr_ano;
 	
-	
-	
+	public Veiculo() {
+		super();
+	}
+
 	public Veiculo(String ds_placa, String ds_cor, int nr_ano) {
 		super();
 		this.ds_placa = ds_placa;
