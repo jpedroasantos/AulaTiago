@@ -41,6 +41,17 @@ public class Pedido {
 	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE }, fetch = FetchType.EAGER)
 	@JoinColumn(name="CD_CLIENTE", nullable = false)
 	private Cliente cliente;
+	
+	public Pedido(float valor, int quantidade, Calendar dataPedido) {
+		super();
+		this.valor = valor;
+		this.quantidade = quantidade;
+		this.dataPedido = dataPedido;
+	}
+
+	public Pedido() {
+		super();
+	}
 
 	public int getCodigo() {
 		return codigo;

@@ -1,14 +1,19 @@
 package br.com.fiap.jpa.entity;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
@@ -37,8 +42,8 @@ public class Cliente {
 	private Calendar dtNasc;
 	
 	//relacionamento bidirecional precisa do mappedBy (atributo do outro lado da relação)
-	@OneToMany(mappedBy = "cliente")
-	private List<Pedido> pedidos;
+	@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
+	private List<Pedido> pedidos = new ArrayList<Pedido>();
 	
 	//mapeamento bidirecional 1 para 1
 	//mappedBy -> utilizado quando for bidirecional
@@ -46,6 +51,34 @@ public class Cliente {
 	@OneToOne(mappedBy = "cliente", cascade = CascadeType.ALL)
 	private Login login;
 	
+	@ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+	//JoinTable modifica as configurações da tabela associativa(nome da tabela) 
+	//joinColumns : coluna que armazena a PK da classe que estamos)
+	//inverseJoinColumns : coluna que armazena a PK da classe que estamos relacionando 
+	@JoinTable(name = "TB_CLIENTE_ENDERECO", 
+			joinColumns = @JoinColumn(name="CD_CLIENTE"), 
+			inverseJoinColumns = @JoinColumn(name="CD_ENDERECO"))
+	private List<Endereco> enderecos;
+	
+	//Metodo que adiciona o pedido no cliente (Somente no OneToMany)
+	public void addPedidos(Pedido pedido) {
+		//adicionar o pedido na lista de pedidos 
+		pedidos.add(pedido); 
+		//setar o cliente nos pedidos 
+		pedido.setCliente(this);
+	}
+	
+	public Cliente(String nome, String sobrenome, Calendar dtNasc) {
+		super();
+		this.nome = nome;
+		this.sobrenome = sobrenome;
+		this.dtNasc = dtNasc;
+	}
+
+	public Cliente() {
+		super();
+	}
+
 	public int getCodigo() {
 		return codigo;
 	}
@@ -92,5 +125,13 @@ public class Cliente {
 
 	public void setLogin(Login login) {
 		this.login = login;
+	}
+
+	public List<Endereco> getEnderecos() {
+		return enderecos;
+	}
+
+	public void setEnderecos(List<Endereco> enderecos) {
+		this.enderecos = enderecos;
 	} 
 }

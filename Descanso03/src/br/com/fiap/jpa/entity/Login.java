@@ -33,6 +33,17 @@ public class Login {
 	@JoinColumn(name="CD_CLIENTE", nullable = false, unique = true)
 	private Cliente cliente;
 	
+	public Login(String senha, String login, Cliente cliente) {
+		super();
+		this.senha = senha;
+		this.login = login;
+		this.cliente = cliente;
+	}
+
+	public Login() {
+		super();
+	}
+
 	public int getCodigo() {
 		return codigo;
 	}
